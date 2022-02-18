@@ -266,9 +266,9 @@ const App = () => {
     <div className="flexi">
       <div className="contract">
         {!currentAccount && (
-            <button className="waveButton" onClick={connectWallet}>
+            <div className="button" onClick={connectWallet}>
               Connect Wallet
-            </button>
+            </div>
         )}
         <h1> New Contract </h1>
         <label>
