@@ -55,6 +55,7 @@ const App = () => {
 
       console.log("Connected", accounts[0]);
       setCurrentAccount(accounts[0]);
+      getAllContracts();
     } catch (error) {
       console.log(error)
     }
