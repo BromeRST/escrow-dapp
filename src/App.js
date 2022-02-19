@@ -98,7 +98,7 @@ const App = () => {
           return {
             arbiterAddress: c.Arbiter,
             beneficiaryAddress: c.Beneficiary,
-            depositerAddress: c.Depositor,
+            depositorAddress: c.Depositor,
             amount: c.Amount,
             arbiterApproved: c.ArbiterApproved,
             escrowApproved: c.IsApproved,
@@ -197,7 +197,7 @@ const App = () => {
         {
           arbiterAddress: arbiter,
           beneficiaryAddress: beneficiary,
-          depositerAddress: depositor,
+          depositorAddress: depositor,
           amount: amountEl,
           arbiterApproved: arbAppr,
           escrowApproved: isAppr,
@@ -300,6 +300,10 @@ const App = () => {
             allContracts.map((c, i) => (
               <div key={i} className="existing-contract">
                 <ul className="fields">
+                <li>
+                    <div> Depositor </div>
+                    <div> {c.depositorAddress} </div>
+                  </li>
                   <li>
                     <div> Arbiter </div>
                     <div> {c.arbiterAddress} </div>
