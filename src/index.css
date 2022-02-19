@@ -38,7 +38,7 @@ input[type="text"] {
 }
 
 .button {
-  background-color: #f58427;
+  background-color: #f57b17;
   color: white;
   text-align: center;
   font-weight: bold;
@@ -49,6 +49,10 @@ input[type="text"] {
   letter-spacing: 1px;
   cursor: pointer;
   border-radius: 8px;
+}
+
+.button:hover {
+  background-color: #cc6613;
 }
 
 .btn {
