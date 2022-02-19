@@ -106,8 +106,6 @@ const App = () => {
           };
         });
 
-        contractsCleaned.reverse();
-
         setAllContracts(contractsCleaned);
       } else {
         console.log("Ethereum object doesn't exist!")
@@ -194,6 +192,7 @@ const App = () => {
     const onNewContract = (arbiter, beneficiary, depositor, amountEl, arbAppr, isAppr, isDism) => {
       console.log("NewContract", arbiter, beneficiary, depositor, amountEl, arbAppr, isAppr, isDism);
       setAllContracts(prevState => [
+        ...prevState,
         {
           arbiterAddress: arbiter,
           beneficiaryAddress: beneficiary,
@@ -203,7 +202,6 @@ const App = () => {
           escrowApproved: isAppr,
           ewscowDismissed: isDism,
         },
-        ...prevState,
       ]);
     };
   
