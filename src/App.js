@@ -359,10 +359,10 @@ const App = () => {
                     {c.escrowApproved ? "Escrow approved" : "Approve"}
                   </button>
                   <button className="button btn" id={i} onClick={dismissButtonClick} disabled={c.escrowApproved || c.escrowDismissed || c.arbiterAddress === "0x0000000000000000000000000000000000000000"}>
-                    {c.escrowDismissed ? "Escrow had been dismissed" : "Dismiss this escrow"}
+                    {c.arbiterAddress === "0x0000000000000000000000000000000000000000" ? "Escrow has been dismissed" : "Dismiss this escrow"}
                   </button>
                   <button className="button btn" id={i} onClick={deleteButtonClick} disabled={c.arbiterAddress === "0x0000000000000000000000000000000000000000"}>
-                    {c.arbiterAddress === "0x0000000000000000000000000000000000000000" ? "Escrow had been deleted" : "Delete this escrow"}
+                    {c.arbiterAddress === "0x0000000000000000000000000000000000000000" ? "Escrow has been deleted" : "Delete this escrow"}
                   </button>
                 </ul>
             </div>
