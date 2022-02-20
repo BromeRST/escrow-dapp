@@ -342,7 +342,7 @@ const App = () => {
                   </li>
                   <li>
                     <div> Timestamp </div>
-                    <div> {c.timestamp} </div>
+                    <div> {c.timestamp.toString()} </div>
                   </li>
                   <li>
                     <div> Value </div>
