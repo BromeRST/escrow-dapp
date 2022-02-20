@@ -10,7 +10,7 @@ const App = () => {
   const [ben, setBen] = useState("");
   const [am, setAm] = useState("");
 
-  const contractAddress = "0x32dC2F7ab31cad1255966cB0489281F9DD05Bb83"
+  const contractAddress = "0xEe826157f4AD84c4E9e3b0E01b803e8FcaCc686f";
   const contractABI = abi.abi;
 
   const checkIfWalletIsConnected = async () => {
@@ -99,6 +99,7 @@ const App = () => {
             arbiterAddress: c.Arbiter,
             beneficiaryAddress: c.Beneficiary,
             depositorAddress: c.Depositor,
+            timestamp: new Date(c.timestamp * 1000),
             amount: c.Amount,
             arbiterApproved: c.ArbiterApproved,
             escrowApproved: c.IsApproved,
@@ -186,17 +187,41 @@ const App = () => {
     }
   }
 
+  const deleteEscrow = async (i) => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const escrowContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        const approveTxn = await escrowContract.deleteContract(i)
+        console.log("Mining...", approveTxn.hash);
+
+        await approveTxn.wait();
+        console.log("Mined -- ", approveTxn.hash);
+
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     let escrowContract;
   
-    const onNewContract = (arbiter, beneficiary, depositor, amountEl, arbAppr, isAppr, isDism) => {
-      console.log("NewContract", arbiter, beneficiary, depositor, amountEl, arbAppr, isAppr, isDism);
+    const onNewContract = (arbiter, beneficiary, depositor, times, amountEl, arbAppr, isAppr, isDism) => {
+      console.log("NewContract", arbiter, beneficiary, depositor, times, amountEl, arbAppr, isAppr, isDism);
       setAllContracts(prevState => [
         ...prevState,
         {
           arbiterAddress: arbiter,
           beneficiaryAddress: beneficiary,
           depositorAddress: depositor,
+          timestamp: new Date(times * 1000),
           amount: amountEl,
           arbiterApproved: arbAppr,
           escrowApproved: isAppr,
@@ -240,6 +265,11 @@ const App = () => {
     setArb("");
     setBen("");
     setAm("");
+  }
+
+  function deleteButtonClick(e) {
+    const {id} = e.target;
+    deleteEscrow(id);
   }
 
   function approveButtonClick(e) {
@@ -311,6 +341,10 @@ const App = () => {
                     <div> {c.beneficiaryAddress} </div>
                   </li>
                   <li>
+                    <div> Timestamp </div>
+                    <div> {c.timestamp} </div>
+                  </li>
+                  <li>
                     <div> Value </div>
                     <div> {ethers.utils.formatUnits(c.amount)} </div>
                   </li>
@@ -322,6 +356,9 @@ const App = () => {
                   </button>
                   <button className="button btn" id={i} onClick={dismissButtonClick} disabled={c.escrowApproved || c.escrowDismissed}>
                     {c.escrowDismissed ? "Escrow had been dismissed" : "Dismiss this escrow"}
+                  </button>
+                  <button className="button btn" id={i} onClick={deleteButtonClick} disabled={c.Arbiter === "0x0000000000000000000000000000000000000000"}>
+                    {c.Arbiter === "0x0000000000000000000000000000000000000000" ? "Escrow had been deleted" : "Delete this escrow"}
                   </button>
                 </ul>
             </div>
