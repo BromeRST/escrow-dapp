@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import abi from "./utils/Escrow.json";
+import abi from "./utils/Escrow2.json";
 
 const App = () => {
 
@@ -10,7 +10,7 @@ const App = () => {
   const [ben, setBen] = useState("");
   const [am, setAm] = useState("");
 
-  const contractAddress = "0xEe826157f4AD84c4E9e3b0E01b803e8FcaCc686f";
+  const contractAddress = "0x7193eff2482F0A633E742d0BFff710f4F55f074D";
   const contractABI = abi.abi;
 
   const checkIfWalletIsConnected = async () => {
@@ -270,25 +270,25 @@ const App = () => {
   function deleteButtonClick(e) {
     const {id} = e.target;
     deleteEscrow(id);
-    setTimeout(getAllContracts, 15000);
+    setTimeout(getAllContracts, 17000);
   }
 
   function approveButtonClick(e) {
     const {id} = e.target
     approveEscrow(id);
-    setTimeout(getAllContracts, 15000);
+    setTimeout(getAllContracts, 17000);
   }
 
   function approveArbiterButtonClick(e) {
     const {id} = e.target
     approveArbiterFromBeneficiary(id);
-    setTimeout(getAllContracts, 15000);
+    setTimeout(getAllContracts, 17000);
   }
 
   function dismissButtonClick(e) {
     const {id} = e.target
     dismissThisEscrow(id);
-    setTimeout(getAllContracts, 15000);
+    setTimeout(getAllContracts, 17000);
   }
 
   useEffect(() => {
@@ -352,17 +352,17 @@ const App = () => {
                     <div> Value </div>
                     <div> {ethers.utils.formatUnits(c.amount)} </div>
                   </li>
-                  <button className="button btn" id={i} onClick={approveArbiterButtonClick} disabled={c.arbiterApproved || c.escrowDismissed}>
+                  <button className="button btn" id={i} onClick={approveArbiterButtonClick} disabled={c.arbiterApproved || c.escrowDismissed || c.arbiterAddress === "0x0000000000000000000000000000000000000000"}>
                   {c.arbiterApproved ? "Arbiter has been approved" : "Arbiter's approve from Beneficiary"}
                   </button>
-                  <button className="button btn" id={i} onClick={approveButtonClick} disabled={c.escrowApproved || c.escrowDismissed}>
+                  <button className="button btn" id={i} onClick={approveButtonClick} disabled={c.escrowApproved || c.escrowDismissed || c.arbiterAddress === "0x0000000000000000000000000000000000000000"}>
                     {c.escrowApproved ? "Escrow approved" : "Approve"}
                   </button>
-                  <button className="button btn" id={i} onClick={dismissButtonClick} disabled={c.escrowApproved || c.escrowDismissed}>
+                  <button className="button btn" id={i} onClick={dismissButtonClick} disabled={c.escrowApproved || c.escrowDismissed || c.arbiterAddress === "0x0000000000000000000000000000000000000000"}>
                     {c.escrowDismissed ? "Escrow had been dismissed" : "Dismiss this escrow"}
                   </button>
-                  <button className="button btn" id={i} onClick={deleteButtonClick} disabled={c.Arbiter === "0x0000000000000000000000000000000000000000"}>
-                    {c.Arbiter === "0x0000000000000000000000000000000000000000" ? "Escrow had been deleted" : "Delete this escrow"}
+                  <button className="button btn" id={i} onClick={deleteButtonClick} disabled={c.arbiterAddress === "0x0000000000000000000000000000000000000000"}>
+                    {c.arbiterAddress === "0x0000000000000000000000000000000000000000" ? "Escrow had been deleted" : "Delete this escrow"}
                   </button>
                 </ul>
             </div>
