@@ -270,21 +270,25 @@ const App = () => {
   function deleteButtonClick(e) {
     const {id} = e.target;
     deleteEscrow(id);
+    setTimeout(getAllContracts, 15000);
   }
 
   function approveButtonClick(e) {
     const {id} = e.target
     approveEscrow(id);
+    setTimeout(getAllContracts, 15000);
   }
 
   function approveArbiterButtonClick(e) {
     const {id} = e.target
     approveArbiterFromBeneficiary(id);
+    setTimeout(getAllContracts, 15000);
   }
 
   function dismissButtonClick(e) {
     const {id} = e.target
     dismissThisEscrow(id);
+    setTimeout(getAllContracts, 15000);
   }
 
   useEffect(() => {
